@@ -45,6 +45,10 @@ There are some utils, they could be removed with minor work.
 
 ![files.png](static/files.png)
 
+#### How to run
+To run, just compile the project in either Debug or Release (Nuget packages should be downloaded automatically) and launch the application.
+**IMPORTANT:** SteamVR (or whatever OpenXR runtime is active on your machine) should be running and your headset connected.
+
 #### Credits
 All of this is based on [hello_xr sample](https://github.com/KhronosGroup/OpenXR-SDK-Source/tree/main/src/tests/hello_xr) by [Khronos  group](https://https://www.khronos.org/)
 
