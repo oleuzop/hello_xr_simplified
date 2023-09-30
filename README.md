@@ -34,7 +34,7 @@ For doing so the best would be to:
 The original hello_xr project has been quite simplified.
 
 - Platforms have been removed (Android, Linux). Only Windows left.
-- All graphic plugins besides D3D11 has been removed
+- All graphic plugins besides D3D11 have been removed
 - No CMake anymore. Now using Nuget package manager for getting OpenXR loader dependency.
 - Only for windows and VS2022 solutions.
 - The sample doesn't render anything. In the original sample some cubes were drawn. Here only a light blue background.
