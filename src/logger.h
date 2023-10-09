@@ -4,9 +4,6 @@
 
 #pragma once
 
-namespace Log {
-enum class Level { Verbose, Info, Warning, Error };
-
-void SetLevel(Level minSeverity);
-void Write(Level severity, const std::string& msg);
-}  // namespace Log
+#include <cstdarg>
+#include <cstdio>
+void MonoPrint(const char* format, ...);

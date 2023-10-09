@@ -40,7 +40,7 @@ ComPtr<ID3DBlob> CompileShader(const char* hlsl, const char* entrypoint, const c
                             compiled.GetAddressOf(), errMsgs.GetAddressOf());
     if (FAILED(hr)) {
         std::string errMsg((const char*)errMsgs->GetBufferPointer(), errMsgs->GetBufferSize());
-        Log::Write(Log::Level::Error, Fmt("D3DCompile failed %X: %s", hr, errMsg.c_str()));
+        printf("D3DCompile failed %X: %s", hr, errMsg.c_str());
         THROW_HR(hr, "D3DCompile");
     }
 
@@ -60,7 +60,7 @@ ComPtr<IDXGIAdapter1> GetAdapter(LUID adapterId) {
         DXGI_ADAPTER_DESC1 adapterDesc;
         CHECK_HRCMD(dxgiAdapter->GetDesc1(&adapterDesc));
         if (memcmp(&adapterDesc.AdapterLuid, &adapterId, sizeof(adapterId)) == 0) {
-            Log::Write(Log::Level::Verbose, Fmt("Using graphics adapter %ws", adapterDesc.Description));
+            MonoPrint("Using graphics adapter %ws", adapterDesc.Description);
             return dxgiAdapter;
         }
     }

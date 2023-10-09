@@ -9,9 +9,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\logger.cpp">
-      <Filter>util</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\pch.cpp">
       <Filter>util</Filter>
     </ClCompile>
@@ -27,11 +24,11 @@
     <ClCompile Include="..\src\d3d_common.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\logger.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\logger.h">
-      <Filter>util</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\pch.h">
       <Filter>util</Filter>
     </ClInclude>
@@ -49,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="..\src\d3d_common.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\logger.h">
+      <Filter>util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

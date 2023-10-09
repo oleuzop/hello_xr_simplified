@@ -124,7 +124,7 @@ struct OpenXrProgram : IOpenXrProgram {
         XrInstanceProperties instanceProperties{ XR_TYPE_INSTANCE_PROPERTIES };
         CHECK_XRCMD(xrGetInstanceProperties(m_instance, &instanceProperties));
 
-        Log::Write(Log::Level::Info, Fmt("Instance RuntimeName=%s RuntimeVersion=%s", instanceProperties.runtimeName, GetXrVersionString(instanceProperties.runtimeVersion).c_str()));
+        MonoPrint("Instance RuntimeName=%s RuntimeVersion=%s", instanceProperties.runtimeName, GetXrVersionString(instanceProperties.runtimeVersion).c_str());
     }
 
     void InitializeSystem() override {
@@ -135,7 +135,7 @@ struct OpenXrProgram : IOpenXrProgram {
         systemInfo.formFactor = m_options->FormFactor;
         CHECK_XRCMD(xrGetSystem(m_instance, &systemInfo, &m_systemId));
 
-        Log::Write(Log::Level::Verbose, Fmt("Using system %d for form factor %s", m_systemId, to_string(m_options->FormFactor)));
+        MonoPrint("Using system %d for form factor %s", m_systemId, to_string(m_options->FormFactor));
         CHECK(m_instance != XR_NULL_HANDLE);
         CHECK(m_systemId != XR_NULL_SYSTEM_ID);
     }
@@ -158,7 +158,7 @@ struct OpenXrProgram : IOpenXrProgram {
         CHECK(m_session == XR_NULL_HANDLE);
 
         {
-            Log::Write(Log::Level::Verbose, Fmt("Creating session..."));
+            MonoPrint("Creating session...");
 
             XrSessionCreateInfo createInfo{XR_TYPE_SESSION_CREATE_INFO};
             createInfo.next = m_graphicsPlugin->GetGraphicsBinding();
@@ -184,14 +184,14 @@ struct OpenXrProgram : IOpenXrProgram {
         CHECK_XRCMD(xrGetSystemProperties(m_instance, m_systemId, &systemProperties));
 
         // Log system properties.
-        Log::Write(Log::Level::Info, Fmt("System Properties: Name=%s VendorId=%d", systemProperties.systemName, systemProperties.vendorId));
-        Log::Write(Log::Level::Info, Fmt("System Graphics Properties: MaxWidth=%d MaxHeight=%d MaxLayers=%d",
-                                         systemProperties.graphicsProperties.maxSwapchainImageWidth,
-                                         systemProperties.graphicsProperties.maxSwapchainImageHeight,
-                                         systemProperties.graphicsProperties.maxLayerCount));
-        Log::Write(Log::Level::Info, Fmt("System Tracking Properties: OrientationTracking=%s PositionTracking=%s",
-                                         systemProperties.trackingProperties.orientationTracking == XR_TRUE ? "True" : "False",
-                                         systemProperties.trackingProperties.positionTracking == XR_TRUE ? "True" : "False"));
+        MonoPrint("System Properties: Name=%s VendorId=%d", systemProperties.systemName, systemProperties.vendorId);
+        MonoPrint("System Graphics Properties: MaxWidth=%d MaxHeight=%d MaxLayers=%d",
+            systemProperties.graphicsProperties.maxSwapchainImageWidth,
+            systemProperties.graphicsProperties.maxSwapchainImageHeight,
+            systemProperties.graphicsProperties.maxLayerCount);
+        MonoPrint("System Tracking Properties: OrientationTracking=%s PositionTracking=%s",
+            systemProperties.trackingProperties.orientationTracking == XR_TRUE ? "True" : "False",
+            systemProperties.trackingProperties.positionTracking == XR_TRUE ? "True" : "False");
 
         // Note: No other view configurations exist at the time this code was written. If this
         // condition is not met, the project will need to be audited to see how support should be
@@ -231,15 +231,13 @@ struct OpenXrProgram : IOpenXrProgram {
                         swapchainFormatsString += "]";
                     }
                 }
-                Log::Write(Log::Level::Verbose, Fmt("Swapchain Formats: %s", swapchainFormatsString.c_str()));
+                MonoPrint("Swapchain Formats: %s", swapchainFormatsString.c_str());
             }
 
             // Create a swapchain for each view.
             for (uint32_t i = 0; i < viewCount; i++) {
                 const XrViewConfigurationView& vp = m_configViews[i];
-                Log::Write(Log::Level::Info,
-                           Fmt("Creating swapchain for view %d with dimensions Width=%d Height=%d SampleCount=%d", i,
-                               vp.recommendedImageRectWidth, vp.recommendedImageRectHeight, vp.recommendedSwapchainSampleCount));
+                MonoPrint("Creating swapchain for view %d with dimensions Width=%d Height=%d SampleCount=%d", i, vp.recommendedImageRectWidth, vp.recommendedImageRectHeight, vp.recommendedSwapchainSampleCount);
 
                 // Create the swapchain.
                 XrSwapchainCreateInfo swapchainCreateInfo{XR_TYPE_SWAPCHAIN_CREATE_INFO};
@@ -279,7 +277,7 @@ struct OpenXrProgram : IOpenXrProgram {
         if (xr == XR_SUCCESS) {
             if (baseHeader->type == XR_TYPE_EVENT_DATA_EVENTS_LOST) {
                 const XrEventDataEventsLost* const eventsLost = reinterpret_cast<const XrEventDataEventsLost*>(baseHeader);
-                Log::Write(Log::Level::Warning, Fmt("%d events lost", eventsLost->lostEventCount));
+                MonoPrint("%d events lost", eventsLost->lostEventCount);
             }
 
             return baseHeader;
@@ -298,7 +296,7 @@ struct OpenXrProgram : IOpenXrProgram {
             switch (event->type) {
                 case XR_TYPE_EVENT_DATA_INSTANCE_LOSS_PENDING: {
                     const auto& instanceLossPending = *reinterpret_cast<const XrEventDataInstanceLossPending*>(event);
-                    Log::Write(Log::Level::Warning, Fmt("XrEventDataInstanceLossPending by %lld", instanceLossPending.lossTime));
+                    MonoPrint("XrEventDataInstanceLossPending by %lld", instanceLossPending.lossTime);
                     *exitRenderLoop = true;
                     *requestRestart = true;
                     return;
@@ -310,7 +308,7 @@ struct OpenXrProgram : IOpenXrProgram {
                 }
                 case XR_TYPE_EVENT_DATA_REFERENCE_SPACE_CHANGE_PENDING:
                 default: {
-                    Log::Write(Log::Level::Verbose, Fmt("Ignoring event type %d", event->type));
+                    MonoPrint("Ignoring event type %d", event->type);
                     break;
                 }
             }
@@ -322,11 +320,10 @@ struct OpenXrProgram : IOpenXrProgram {
         const XrSessionState oldState = m_sessionState;
         m_sessionState = stateChangedEvent.state;
 
-        Log::Write(Log::Level::Info, Fmt("XrEventDataSessionStateChanged: state %s->%s session=%lld time=%lld", to_string(oldState),
-                                         to_string(m_sessionState), stateChangedEvent.session, stateChangedEvent.time));
+        MonoPrint("XrEventDataSessionStateChanged: state %s->%s session=%lld time=%lld", to_string(oldState), to_string(m_sessionState), stateChangedEvent.session, stateChangedEvent.time);
 
         if ((stateChangedEvent.session != XR_NULL_HANDLE) && (stateChangedEvent.session != m_session)) {
-            Log::Write(Log::Level::Error, "XrEventDataSessionStateChanged for unknown session");
+            MonoPrint("XrEventDataSessionStateChanged for unknown session");
             return;
         }
 

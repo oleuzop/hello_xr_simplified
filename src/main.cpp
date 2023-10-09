@@ -56,10 +56,10 @@ int main(int argc, char* argv[]) {
 
         return 0;
     } catch (const std::exception& ex) {
-        Log::Write(Log::Level::Error, ex.what());
+        MonoPrint(ex.what());
         return 1;
     } catch (...) {
-        Log::Write(Log::Level::Error, "Unknown Error");
+        MonoPrint("Unknown Error");
         return 1;
     }
 }
