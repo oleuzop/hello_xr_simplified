@@ -4,63 +4,53 @@
 
 #pragma once
 
-#define CHK_STRINGIFY(x) #x
-#define TOSTRING(x) CHK_STRINGIFY(x)
-#define FILE_AND_LINE __FILE__ ":" TOSTRING(__LINE__)
 
-[[noreturn]] inline void Throw(std::string failureMessage, const char* originator = nullptr, const char* sourceLocation = nullptr) {
+[[noreturn]] inline void Throw(std::string failureMessage, const char* originator = nullptr) {
+    MonoPrint("Message: %s", failureMessage);
     if (originator != nullptr) {
-        failureMessage += Fmt("\n    Origin: %s", originator);
+        MonoPrint("Origin: %s", originator);
     }
-    if (sourceLocation != nullptr) {
-        failureMessage += Fmt("\n    Source: %s", sourceLocation);
-    }
-
-    throw std::logic_error(failureMessage);
 }
 
-#define THROW(msg) Throw(msg, nullptr, FILE_AND_LINE);
 #define CHECK(exp)                                      \
     {                                                   \
         if (!(exp)) {                                   \
-            Throw("Check failed", #exp, FILE_AND_LINE); \
+            Throw("Check failed", #exp);                \
         }                                               \
     }
 #define CHECK_MSG(exp, msg)                  \
     {                                        \
         if (!(exp)) {                        \
-            Throw(msg, #exp, FILE_AND_LINE); \
+            Throw(msg, #exp);                \
         }                                    \
     }
 
-[[noreturn]] inline void ThrowXrResult(XrResult res, const char* originator = nullptr, const char* sourceLocation = nullptr) {
-    Throw(Fmt("XrResult failure [%s]", to_string(res)), originator, sourceLocation);
+[[noreturn]] inline void ThrowXrResult(XrResult res, const char* originator = nullptr) {
+    Throw(("XrResult = " + std::to_string(res)).c_str(), originator);
 }
 
-inline XrResult CheckXrResult(XrResult res, const char* originator = nullptr, const char* sourceLocation = nullptr) {
+inline XrResult CheckXrResult(XrResult res, const char* originator = nullptr) {
     if (XR_FAILED(res)) {
-        ThrowXrResult(res, originator, sourceLocation);
+        ThrowXrResult(res, originator);
     }
-
     return res;
 }
 
-#define THROW_XR(xr, cmd) ThrowXrResult(xr, #cmd, FILE_AND_LINE);
-#define CHECK_XRCMD(cmd) CheckXrResult(cmd, #cmd, FILE_AND_LINE);
-#define CHECK_XRRESULT(res, cmdStr) CheckXrResult(res, cmdStr, FILE_AND_LINE);
+#define THROW_XR(xr, cmd) ThrowXrResult(xr, #cmd);
+#define CHECK_XRCMD(cmd) CheckXrResult(cmd, #cmd);
+#define CHECK_XRRESULT(res, cmdStr) CheckXrResult(res, cmdStr);
 
-[[noreturn]] inline void ThrowHResult(HRESULT hr, const char* originator = nullptr, const char* sourceLocation = nullptr) {
-    Throw(Fmt("HRESULT failure [%x]", hr), originator, sourceLocation);
+[[noreturn]] inline void ThrowHResult(HRESULT hr, const char* originator = nullptr) {
+    Throw(("HRESULT failure = " + std::to_string(hr)).c_str(), originator);
 }
 
-inline HRESULT CheckHResult(HRESULT hr, const char* originator = nullptr, const char* sourceLocation = nullptr) {
+inline HRESULT CheckHResult(HRESULT hr, const char* originator = nullptr) {
     if (FAILED(hr)) {
-        ThrowHResult(hr, originator, sourceLocation);
+        ThrowHResult(hr, originator);
     }
-
     return hr;
 }
 
-#define THROW_HR(hr, cmd) ThrowHResult(hr, #cmd, FILE_AND_LINE);
-#define CHECK_HRCMD(cmd) CheckHResult(cmd, #cmd, FILE_AND_LINE);
-#define CHECK_HRESULT(res, cmdStr) CheckHResult(res, cmdStr, FILE_AND_LINE);
+#define THROW_HR(hr, cmd) ThrowHResult(hr, #cmd);
+#define CHECK_HRCMD(cmd) CheckHResult(cmd, #cmd);
+#define CHECK_HRESULT(res, cmdStr) CheckHResult(res, cmdStr);

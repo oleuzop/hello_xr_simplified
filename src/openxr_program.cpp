@@ -20,7 +20,7 @@ const int COUNT = 2;
 }  // namespace Side
 
 inline std::string GetXrVersionString(XrVersion ver) {
-    return Fmt("%d.%d.%d", XR_VERSION_MAJOR(ver), XR_VERSION_MINOR(ver), XR_VERSION_PATCH(ver));
+    return std::to_string(XR_VERSION_MAJOR(ver)) + "." + std::to_string(XR_VERSION_MINOR(ver)) + "." + std::to_string(XR_VERSION_PATCH(ver));
 }
 
 namespace Math {

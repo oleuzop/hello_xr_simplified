@@ -94,8 +94,7 @@ struct D3D11GraphicsPlugin : public IGraphicsPlugin {
             {"COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
         };
 
-        CHECK_HRCMD(m_device->CreateInputLayout(vertexDesc, (UINT)ArraySize(vertexDesc), vertexShaderBytes->GetBufferPointer(),
-                                                vertexShaderBytes->GetBufferSize(), &m_inputLayout));
+        CHECK_HRCMD(m_device->CreateInputLayout(vertexDesc, (UINT)ArraySize(vertexDesc), vertexShaderBytes->GetBufferPointer(), vertexShaderBytes->GetBufferSize(), &m_inputLayout));
 
         const CD3D11_BUFFER_DESC modelConstantBufferDesc(sizeof(ModelConstantBuffer), D3D11_BIND_CONSTANT_BUFFER);
         CHECK_HRCMD(m_device->CreateBuffer(&modelConstantBufferDesc, nullptr, m_modelCBuffer.ReleaseAndGetAddressOf()));
@@ -126,7 +125,7 @@ struct D3D11GraphicsPlugin : public IGraphicsPlugin {
             std::find_first_of(runtimeFormats.begin(), runtimeFormats.end(), std::begin(SupportedColorSwapchainFormats),
                                std::end(SupportedColorSwapchainFormats));
         if (swapchainFormatIt == runtimeFormats.end()) {
-            THROW("No runtime swapchain format supported for color swapchain");
+            MonoPrint("No runtime swapchain format supported for color swapchain");
         }
 
         return *swapchainFormatIt;
