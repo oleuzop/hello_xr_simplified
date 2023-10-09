@@ -32,9 +32,6 @@ struct IOpenXrProgram {
     // Manage session state to track if input should be processed.
     virtual bool IsSessionFocused() const = 0;
 
-    // Sample input actions and generate haptic feedback.
-    //virtual void PollActions() = 0;
-
     // Create and submit a frame.
     virtual void RenderFrame() = 0;
 };
