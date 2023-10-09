@@ -33,7 +33,7 @@ constexpr size_t ArraySize(const T (&/*unused*/)[Size]) noexcept {
     return Size;
 }
 
-#include "logger.h"
+void MonoPrint(const char* format, ...);
 
 [[noreturn]] inline void Throw(std::string failureMessage, const char* originator = nullptr) {
     MonoPrint("Message: %s", failureMessage);

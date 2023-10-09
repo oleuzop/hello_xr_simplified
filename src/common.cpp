@@ -2,7 +2,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-#include "logger.h"
+#include <cstdarg>
+#include <cstdio>
 
 void MonoPrint(const char* format, ...) {
     va_list args;

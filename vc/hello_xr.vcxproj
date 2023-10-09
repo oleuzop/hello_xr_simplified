@@ -21,18 +21,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\d3d_common.cpp" />
+    <ClCompile Include="..\src\common.cpp" />
     <ClCompile Include="..\src\graphicsplugin.cpp" />
-    <ClCompile Include="..\src\logger.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\openxr_program.cpp" />
     <ClCompile Include="..\src\pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\common.h" />
-    <ClInclude Include="..\src\d3d_common.h" />
     <ClInclude Include="..\src\graphicsplugin.h" />
-    <ClInclude Include="..\src\logger.h" />
     <ClInclude Include="..\src\openxr_program.h" />
     <ClInclude Include="..\src\pch.h" />
   </ItemGroup>

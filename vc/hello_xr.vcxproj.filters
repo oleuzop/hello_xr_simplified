@@ -1,51 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="util">
-      <UniqueIdentifier>{f7306651-d21a-4c1d-91f7-af5f6711fcac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{7d799e55-8fa4-4bf5-86bf-659010d0847c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\pch.cpp">
-      <Filter>util</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\openxr_program.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\common.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\pch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\graphicsplugin.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\d3d_common.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\logger.cpp">
-      <Filter>util</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\openxr_program.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\pch.h">
-      <Filter>util</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common.h">
-      <Filter>util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\openxr_program.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphicsplugin.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\d3d_common.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\logger.h">
-      <Filter>util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
