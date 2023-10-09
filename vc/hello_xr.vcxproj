@@ -29,7 +29,6 @@
     <ClCompile Include="..\src\pch.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\check.h" />
     <ClInclude Include="..\src\common.h" />
     <ClInclude Include="..\src\d3d_common.h" />
     <ClInclude Include="..\src\graphicsplugin.h" />
