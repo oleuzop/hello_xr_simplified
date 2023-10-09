@@ -9,7 +9,7 @@ Because of this it can be a little be overwhelming for somebody having first con
 In this sample I've taken the hello_xr sample and I've cleaned it up to support only Windows and have only DirectX 11.
 The objective of adding OpenXR support for an existing application to be able to do VR in Windows with OpenXR and any of its existing runtimes (SteamVR, WMR, Oculus,...)
 
-As hypothetically the existing application won't be migrated to any other platform (it probably will run in Windows forever) and it's already implemented in DirectX 11 this is the only graphic plugin that will be supported. In the future, if Vulkan, DirectX 12 or any other graphic library would be supported then we would see how to add OpenXR needed graphic plugin.
+As hypothetically the existing application won't be migrated to any other platform (it probably will run in Windows forever) and it's already implemented in DirectX 11 this is the only graphic plugin that will be supported. In the future, if Vulkan, DirectX 12 or any other graphic library would be supported then we would see how to add needed OpenXR graphic plugin.
 
 #### Conceptual
 
@@ -34,7 +34,7 @@ For doing so the best would be to:
 The original hello_xr project has been quite simplified.
 
 - Platforms have been removed (Android, Linux). Only Windows left.
-- All graphic plugins besides D3D11 has been removed
+- All graphic plugins besides D3D11 have been removed
 - No CMake anymore. Now using Nuget package manager for getting OpenXR loader dependency.
 - Only for windows and VS2022 solutions.
 - The sample doesn't render anything. In the original sample some cubes were drawn. Here only a light blue background.
